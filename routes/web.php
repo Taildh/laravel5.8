@@ -11,10 +11,27 @@
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
-});
-Route::get('/admin', function () {
-    return view('layouts.admin');
+// Route::get('/', function () {
+//     return view('welcome');
+// });
+Route::group(['prefix' => 'admin'], function () {
+    Route::get('products', 'ProductController@index');
+	Route::get('products/add','ProductController@index');
+
 });
 
+// <LOGIN> 
+Route::get('sign-up', 'HomeController@signUp')->name('sign-up');
+Route::post('sign-up', 'HomeController@postSignUp');
+Route::get('login', 'HomeController@login')->name('login');
+Route::post('login','HomeController@postLogin');
+
+
+
+// </LOGIN>
+Route::get('/', 'HomeController@index')->name('home');
+Route::post('/cart-add', 'CartController@add')->name('cart.add');
+Route::get('/cart-checkout', 'CartController@cart')->name('cart.checkout');
+Route::post('/cart-clear', 'CartController@clear')->name('cart.clear');
+Route::get('/brands/{url}', 'HomeController@brands')->name('brands');
+Route::get('/categories/{url}', 'HomeController@categories')->name('categories');
